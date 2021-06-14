@@ -43,8 +43,7 @@ class UpdateAccount extends Component {
   Submitdata(e) {
     e.preventDefault();
     let validate = 0;
-    let a = this.state.errorForm;
-    // let vldemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let a = {};
     let {
       name,
       email,
@@ -56,25 +55,16 @@ class UpdateAccount extends Component {
       id,
     } = this.state;
     if (!name) {
-      validate += 1;
+      validate = 1;
       a["name"] = "Vui long nhap ten";
-    } else {
-      validate = 0;
-      a["name"] = "";
     }
     if (!phone) {
-      validate += 1;
+      validate = 1;
       a["phone"] = "Vui long nhap số điện thoại";
-    } else {
-      validate = 0;
-      a["phone"] = "";
     }
     if (!address) {
       validate += 1;
       a["address"] = "Vui long nhap dia chi";
-    } else {
-      validate = 0;
-      a["address"] = "";
     }
    
     if (validate === 0) {
