@@ -76,9 +76,7 @@ class UpdateAccount extends Component {
       validate = 0;
       a["address"] = "";
     }
-    this.setState({
-      errorForm: a,
-    });
+   
     if (validate === 0) {
       const formData = new FormData();
       let token = localStorage.token;
@@ -106,6 +104,10 @@ class UpdateAccount extends Component {
           console.log(res.data["Auth"]);
           localStorage.data = JSON.stringify(res.data["Auth"]);
         });
+    }else{
+      this.setState({
+        errorForm: a,
+      });
     }
   }
   HandleUserInputFile(e) {

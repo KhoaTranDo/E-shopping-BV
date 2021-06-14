@@ -293,7 +293,7 @@ class Addproduct extends Component {
   render() {
     return (
       <>
-        <div className="signup-form">
+        <div className="signup-form col-sm-8">
           <h2>Add Product</h2>
           <form action="#">
             <input

@@ -12,7 +12,6 @@ class headerMiddle extends Component {
   }
   Loadlogin() {
     let a=localStorage.token?true:false
-    console.log(a)
     if (a) {
       return (
         <>

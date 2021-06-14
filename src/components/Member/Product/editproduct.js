@@ -37,9 +37,9 @@ class editproduct extends Component {
         'Accept': "application/json",
       },
     };    
-    console.log(this.props.idproduct)
+    console.log(this.props.match.params.slug)
     axios
-      .get(`http://localhost:8080/laravel/public/api/user/product/${this.props.idproduct}`,config)
+      .get(`http://localhost:8080/laravel/public/api/user/product/${this.props.match.params.slug}`,config)
       .then((res) => {
           console.log(res.data.data)
         this.setState({
@@ -360,7 +360,7 @@ class editproduct extends Component {
   render() {
     return (
       <>
-        <div className="signup-form">
+        <div className="signup-form col-sm-8">
           <h2>Edit Product</h2>
           <form action="#">
             <input

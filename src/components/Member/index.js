@@ -17,9 +17,9 @@ class index extends Component {
           <Switch>
             <Route path="/Account/Update" component={Updateaccount}></Route>
             <Route path="/Product/Addnew" component={Addproduct}></Route>
-            <Route path="/Product" component={Myproduct}></Route>
             <Route path="/Product/Edit/:slug" component={Editproduct}></Route>
-            <Route path="/Product/Delete" component={Editproduct}></Route>
+            <Route path="/Product" component={Myproduct}></Route>
+            {/* <Route path="/Product/Delete" component={Editproduct}></Route> */}
             <Route path="/profile" component={Myaccount}></Route>
             <Route path="/member" component={Member}></Route>
           </Switch>

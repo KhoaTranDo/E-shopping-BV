@@ -34,14 +34,9 @@ class Profile extends Component {
   render() {
     return (
       <>
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-3">
-          
-                <Slide data={this.PropsChange} />
-          
-            </div>
-            <div className="col-sm-9">
+    
+           
+            <div className="col-sm-8">
               <div
                 id="sportswear"
                 className={this.state.profile}
@@ -61,8 +56,6 @@ class Profile extends Component {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
       </>
     );
   }

@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 class slider extends Component{
   render() {
     return (
-      <div className="left-sidebar col-4">
+      <div className="left-sidebar col-sm-4">
         <h2>Account</h2>
         <div className="panel-group category-products" id="accordian">
           <div className="panel panel-default">

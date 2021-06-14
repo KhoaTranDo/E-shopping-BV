@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Sliderbar from './slide'
+import { withRouter } from "react-router";
 import Blogcontent from "./newblog";
 
 class blog extends Component {
@@ -14,7 +14,6 @@ class blog extends Component {
     return (
       <>
         <section>
-        
               <div className="col-sm-12">
                 <Blogcontent></Blogcontent>
               </div>
@@ -25,4 +24,4 @@ class blog extends Component {
   }
 }
 
-export default blog;
+export default  blog;

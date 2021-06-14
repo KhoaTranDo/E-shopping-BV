@@ -1,8 +1,5 @@
 import axios from "axios";
 import { Component } from "react";
-import Addproduct from "./addproduct";
-import Editproduct from "./editproduct"
-import { Modal } from '@material-ui/core';
 import {Link} from "react-router-dom"
 class Myproduct extends Component {
   constructor(props) {
@@ -10,18 +7,8 @@ class Myproduct extends Component {
     this.state = {
       data: {},
     };
-
-    this.Handlechange = this.Handlechange.bind(this);
   }
   componentDidMount() {
-    if (localStorage.data) {
-      let a = JSON.parse(localStorage.data);
-      this.setState({
-        addproduct: false,
-        editproduct: false,
-        loadproduct: true,
-      });
-    }
     let token = localStorage.token;
     let config = {
       headers: {
@@ -38,72 +25,23 @@ class Myproduct extends Component {
         });
       });
   }
-  Changeform = (e,data) => {
-  //  Edit delete
-      e.preventDefault();
-      if(e.target.id==='edit'){
-          console.log('edit')
-          this.setState({
-            id:data
-          })
-          return this.Submitdata(e,'edit')
-      }
-      else if(e.target.id==='delete'){  
-        let token = localStorage.token;
-        let config = {
-          headers: {
-            "Authorization":"Bearer "+ token, // CÓ dấu cách
-            'Accept': "application/json",
-          },
-        };    
-        
-        axios.get(`http://localhost:8080/laravel/public/api/user/delete-product/${data}`,
-        config)
-        .then((res) => {
-          this.setState({
-            data: res.data.data,
-          });
-        });
-      }
-  };
-
-  Handlechange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-  // Đổi form sản phẩm
-  Submitdata = (e, data) => {
-    console.log(data)
-    // e.preventDefault();
-    if (data==='edit')
+  Deleteproduct=(e,data)=>{
+    e.preventDefault();
+    let token = localStorage.token;
+    let config = {
+      headers: {
+        "Authorization":"Bearer "+ token, // CÓ dấu cách
+        'Accept': "application/json",
+      },
+    };    
+    
+    axios.get(`http://localhost:8080/laravel/public/api/user/delete-product/${data}`,
+    config)
+    .then((res) => {
       this.setState({
-        editproduct:true,
-        addproduct: false,
-        loadproduct: false,
+        data: res.data.data,
       });
-    else if(data==='add'){
-      this.setState({
-        editproduct:false,
-        addproduct: true,
-        loadproduct: false,
-      });
-    }
-    else if(data==='myproduct'){
-      this.setState({
-        editproduct:false,
-        addproduct: false,
-        loadproduct: true,
-      });
-    }
-  };
-  VerDelete=(e,data)=>{
-  return  <Modal
-  aria-labelledby="simple-modal-title"
-  aria-describedby="simple-modal-description"
-
->
-  Bạn co chắc muốn xoá không 
-  <button onClick={(e)=>this.Changeform(e,data)}>Bạn có chắc muốn xoá</button>
-</Modal>
+    });
   }
   RenderProduct = (e) => {
     let dataproduct = this.state.data;
@@ -129,21 +67,19 @@ class Myproduct extends Component {
             </td>
             <td>{dataproduct[value].price}</td>
             <td>
-              <i
-                class="fa fa-pencil-square-o fa-2x"
-                name={dataproduct[value].id}
+              <Link
+                to={`/Product/Edit/${dataproduct[value].id}`}
+                className="fa fa-pencil-square-o fa-2x"
                 aria-hidden="true"
-                id='edit'
-                onClick={(e)=>this.Changeform(e,dataproduct[value].id)}
-              ></i>
+              ></Link>
             </td>
             <td>
               <i
-                class="fa fa-times"
+                className="fa fa-times"
                 name={dataproduct[value].id}
                 aria-hidden="true"
                 id='delete'
-                onClick={(e)=>this.VerDelete(e,dataproduct[value].id)}
+                onClick={(e)=>this.Deleteproduct(e,dataproduct[value].id)}
               ></i>
             </td>
           </tr>
@@ -152,20 +88,18 @@ class Myproduct extends Component {
     }
   };
   RenderForm = () => {
-    if (this.state.loadproduct) {
       return (
-        <div className="signup-form">
+        <div className="signup-form col-sm-8">
           <h2>Product</h2>
-
           <form action="#">
-            <table class="table">
-              <thead class="thead-dark">
+            <table className="table">
+              <thead className="thead-dark">
                 <tr>
                   <th scope="col">Id</th>
                   <th scope="col">Name</th>
                   <th scope="col">Image</th>
                   <th scope="col">Price</th>
-                  <th scope="col" colspan="2">
+                  <th scope="col" colSpan="2">
                     Action
                   </th>
                 </tr>
@@ -181,27 +115,6 @@ class Myproduct extends Component {
           </form>
         </div>
       );
-    }
-    if (this.state.addproduct) {
-      return (
-        <>
-          <Addproduct />
-          <button onClick={(e)=>this.Submitdata(e,'myproduct')} className="btn btn-default">
-            Cancel
-          </button>
-        </>
-      );
-    }
-    if (this.state.editproduct) {
-      return (
-        <>
-          <Editproduct idproduct={this.state.id}/>
-          <button onClick={(e)=>this.Submitdata(e,'myproduct')} className="btn btn-default">
-            Cancel
-          </button>
-        </>
-      );
-    }
   };
   //tu dong render khi co state thay doi
   render() {
