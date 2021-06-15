@@ -218,6 +218,8 @@ class editproduct extends Component {
           sale: res.data.data.sale,
           image: JSON.parse(res.data.data.image),
           id_user: res.data.data.id_user,
+          imageremove:[ ],
+          isChecked: false,
         });
 
           })
@@ -353,17 +355,17 @@ class editproduct extends Component {
   };
   renderimage = () => {
     if (this.state.image.length > 0) {
-      let Imagerender = this.state.image;
       return (
         <div className="listimage-edit">
-          {Imagerender.map((index) => {
-            return (
+          {this.state.image.map((index) => {
+            return (  
               <div style={{ display: "inline-block" }}>
                 <img
                   src={`http://localhost:8080/laravel/public/upload/user/product/${this.state.id_user}/${index}`}
                 ></img>
                 <input
                   type="checkbox"
+                  checked={this.state.imageremove.includes(index)}
                   value={index}
                   onChange={(e) => this.checkvalue(e)}
                 ></input>
