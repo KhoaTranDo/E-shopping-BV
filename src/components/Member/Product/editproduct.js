@@ -43,7 +43,6 @@ class editproduct extends Component {
         config
       )
       .then((res) => {
-        console.log(res.data.data);
         this.setState({
           name: res.data.data.name,
           price: res.data.data.price,
@@ -116,7 +115,7 @@ class editproduct extends Component {
       sale,
       company,
       file,
-      detail
+      detail,
     } = this.state;
     let check = 0;
     let geterror = {};
@@ -168,7 +167,6 @@ class editproduct extends Component {
       let currentImg = this.state.image.length;
       let newImg = file.length;
       let remove = this.state.imageremove.length;
-      // console.log(currentImg-remove+newImg)
       if (
         currentImg - remove + newImg >= 0 &&
         currentImg - remove + newImg <= 3
@@ -177,9 +175,9 @@ class editproduct extends Component {
         let token = localStorage.token;
         let config = {
           headers: {
-            "Authorization": "Bearer " + token, // CÓ dấu cách
+            Authorization: "Bearer " + token, // CÓ dấu cách
             "Content-Type": "application/x-www-form-urlencoded",
-            "Accept": "application/json",
+            Accept: "application/json",
           },
         };
         formData.append("category", categoryrs);
@@ -189,44 +187,38 @@ class editproduct extends Component {
         formData.append("status", status);
         formData.append("detail", detail);
         formData.append("company", company);
-   
+
         file.map((value) => {
-          console.log(value)
           formData.append("file[]", value);
         });
         this.state.imageremove.map((value) => {
-          console.log(value)
           formData.append("avatarCheckBox[]", value);
         });
         axios
           .post(
-          `http://localhost:8080/laravel/public/api/user/edit-product/${this.props.match.params.slug}`,
+            `http://localhost:8080/laravel/public/api/user/edit-product/${this.props.match.params.slug}`,
             formData,
             config
           )
           .then((res) => {
-            console.log(res.data.data);
-           
-        this.setState({
-          name: res.data.data.name,
-          price: res.data.data.price,
-          company: res.data.data.company_profile,
-          detail: res.data.data.detail,
-          brandrs: res.data.data.id_brand,
-          categoryrs: res.data.data.id_category,
-          status: res.data.data.status,
-          sale: res.data.data.sale,
-          image: JSON.parse(res.data.data.image),
-          id_user: res.data.data.id_user,
-          imageremove:[ ],
-          isChecked: false,
-        });
-
+            this.setState({
+              name: res.data.data.name,
+              price: res.data.data.price,
+              company: res.data.data.company_profile,
+              detail: res.data.data.detail,
+              brandrs: res.data.data.id_brand,
+              categoryrs: res.data.data.id_category,
+              status: res.data.data.status,
+              sale: res.data.data.sale,
+              image: JSON.parse(res.data.data.image),
+              id_user: res.data.data.id_user,
+              imageremove: [],
+              isChecked: false,
+            });
           })
-          .catch((err)=>{
-            console.log(err.response)
-          })
-          
+          .catch((err) => {
+            console.log(err.response);
+          });
       } else {
         geterror["status"] = "Vuot qua 3 anh";
         this.setState({
@@ -331,11 +323,6 @@ class editproduct extends Component {
     }
   };
   checkvalue = (e) => {
-    // var all_users = [];
-    // var value = this.checkbox.value;
-    // all_users.push(value);
-    // console.log(all_users);
-
     if (e.target.checked === true) {
       let { imageremove } = this.state;
       imageremove.push(e.target.value);
@@ -358,7 +345,7 @@ class editproduct extends Component {
       return (
         <div className="listimage-edit">
           {this.state.image.map((index) => {
-            return (  
+            return (
               <div style={{ display: "inline-block" }}>
                 <img
                   src={`http://localhost:8080/laravel/public/upload/user/product/${this.state.id_user}/${index}`}

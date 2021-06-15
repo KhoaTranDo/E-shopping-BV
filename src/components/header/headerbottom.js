@@ -18,8 +18,8 @@ class headerBottom extends Component {
                     </div>
                     <div className="mainmenu pull-left">
                         <ul className="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="index.html">Home</a></li>
-                            <li className="dropdown"><a href="/#">Shop<i className="fa fa-angle-down"></i></a>
+                            <li><Link to="/">Home</Link></li>
+                            <li className="dropdown"><a href="/">Shop<i className="fa fa-angle-down"></i></a>
                                 <ul role="menu" className="sub-menu">
                                     <li><a href="shop.html">Products</a></li>
                                     <li><a href="product-details.html">Product Details</a></li> 

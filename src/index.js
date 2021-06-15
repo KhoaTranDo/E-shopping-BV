@@ -7,15 +7,17 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Blogdetail from "./components/Blog/blogdetail";
 import Blog from "./components/Blog/blog";
 import None from "./components/layout/none";
+import Homepage from "./components/homepage/Homepage";
 import Account from "./components/Member/index"
 ReactDOM.render(
   <Router>
     <App>
       <Switch>
-        <Route path="/blog/detail/:id" component={Blogdetail}></Route>
-        <Route path="/blog" component={Blog}></Route>
-        <Route path="/404" component={None}></Route>
-        <Route component={Account}></Route>
+        <Route exact path="/" component={Homepage}></Route>
+        <Route  path="/blog/detail/:id" component={Blogdetail}></Route>
+        <Route  path="/blog" component={Blog}></Route>
+        <Route  path="/404" component={None}></Route>
+        <Route  component={Account}></Route>
       </Switch>
     </App>
   </Router>,

@@ -181,6 +181,7 @@ class Addproduct extends Component {
       )
       .then((res) => {
         console.log(res.data);
+        this.props.history.push("/Product");
       });
     }
    

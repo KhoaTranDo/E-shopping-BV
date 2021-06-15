@@ -54,7 +54,7 @@ class headerMiddle extends Component {
           <div className="row">
             <div className="col-md-4 clearfix">
               <div className="logo pull-left">
-                <Link to="index.html">
+                <Link to="/">
                   <img src="images/home/logo.png" alt="" />
                 </Link>
               </div>
@@ -102,17 +102,17 @@ class headerMiddle extends Component {
               <div className="shop-menu clearfix pull-right">
                 <ul className="nav navbar-nav">
                   <li>
-                    <Link to="/#">
+                    <Link to="/">
                       <i className="fa fa-star"></i> Wishlist
                     </Link>
                   </li>
                   <li>
-                    <Link to="checkout.html">
+                    <Link to="/">
                       <i className="fa fa-crosshairs"></i> Checkout
                     </Link>
                   </li>
                   <li>
-                    <Link to="cart.html">
+                    <Link to="/">
                       <i className="fa fa-shopping-cart"></i> Cart
                     </Link>
                   </li>
