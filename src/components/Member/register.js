@@ -50,7 +50,6 @@ class Register extends Component {
       if (vldemail.test(String(email).toLocaleLowerCase()) !== true) {
         validate += 1;
         a['email']="Email sai dinh dang"
-        console.log(a)
         this.setState({
            errorForm: a,
          });
@@ -60,7 +59,6 @@ class Register extends Component {
         a['email']=""
       }
     }
-    console.log(a)
     if (validate === 0) {
       this.setState({
         errorForm: {}
@@ -68,7 +66,6 @@ class Register extends Component {
       let data={name,email,password,phone,address,avatar,level}
       axios.post("http://localhost:8080/laravel/public/api/register", data)
       .then(res=>{
-        console.log(res)
         if(res.data.errors){
           this.setState({
             errorForm: res.data.errors

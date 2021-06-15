@@ -2,7 +2,7 @@ import { Component } from "react";
 import Product from "../Product/myProduct";
 import Account from "./updateaccount";
 import Slide from "../slide";
-
+import { Redirect } from "react-router";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -32,32 +32,34 @@ class Profile extends Component {
   };
   //tu dong render khi co state thay doi
   render() {
-    return (
-      <>
-    
-           
-            <div className="col-sm-8">
-              <div
-                id="sportswear"
-                className={this.state.profile}
-                style={{ height: this.state.heighpf }}
-              >
-                <div className="panel-body">
-                  <Account />
+    if(localStorage.isLogin){
+      return (
+        <>
+              <div className="col-sm-8">
+                <div
+                  id="sportswear"
+                  className={this.state.profile}
+                  style={{ height: this.state.heighpf }}
+                >
+                  <div className="panel-body">
+                    <Account />
+                  </div>
+                </div>
+                <div
+                  id="mens"
+                  className={this.state.myproduct}
+                  style={{ height: this.state.heighpr }}
+                >
+                  <div className="panel-body">
+                    <Product />
+                  </div>
                 </div>
               </div>
-              <div
-                id="mens"
-                className={this.state.myproduct}
-                style={{ height: this.state.heighpr }}
-              >
-                <div className="panel-body">
-                  <Product />
-                </div>
-              </div>
-            </div>
-      </>
-    );
+        </>
+      );
+    }else{
+      return <Redirect to="/" />
+    }
   }
 }
 

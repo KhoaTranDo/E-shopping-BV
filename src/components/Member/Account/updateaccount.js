@@ -91,7 +91,6 @@ class UpdateAccount extends Component {
           config
         )
         .then((res) => {
-          console.log(res.data["Auth"]);
           localStorage.data = JSON.stringify(res.data["Auth"]);
         });
     }else{

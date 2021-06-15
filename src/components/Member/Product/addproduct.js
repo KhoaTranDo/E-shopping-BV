@@ -154,7 +154,6 @@ class Addproduct extends Component {
     if(check){
       const formData = new FormData();
       let token = localStorage.token;
-      console.log(token)
       let config = {
         headers: {
           Authorization: "Bearer " + token, // CÓ dấu cách
@@ -180,7 +179,6 @@ class Addproduct extends Component {
         config
       )
       .then((res) => {
-        console.log(res.data);
         this.props.history.push("/Product");
       });
     }
