@@ -13,11 +13,11 @@ class editproduct extends Component {
       detail: "",
       status: "",
       sale: "",
-      company:'',
+      company: "",
       showsale: "hidden",
       error: {},
-      image:[],
-      imageremove:[]
+      image: [],
+      imageremove: [],
     };
 
     this.Handlechange = this.Handlechange.bind(this);
@@ -33,26 +33,28 @@ class editproduct extends Component {
     let token = localStorage.token;
     let config = {
       headers: {
-        "Authorization":"Bearer "+ token, // CÓ dấu cách
-        'Accept': "application/json",
+        Authorization: "Bearer " + token, // CÓ dấu cách
+        Accept: "application/json",
       },
-    };    
-    console.log(this.props.match.params.slug)
+    };
     axios
-      .get(`http://localhost:8080/laravel/public/api/user/product/${this.props.match.params.slug}`,config)
+      .get(
+        `http://localhost:8080/laravel/public/api/user/product/${this.props.match.params.slug}`,
+        config
+      )
       .then((res) => {
-          console.log(res.data.data)
+        console.log(res.data.data);
         this.setState({
           name: res.data.data.name,
-          price:res.data.data.price,
-          company:res.data.data.company_profile,
-          detail:res.data.data.detail,
-          brandrs:res.data.data.id_brand,
-          categoryrs:res.data.data.id_category,
-          status:res.data.data.status,
-          sale:res.data.data.sale,
-          image:res.data.data.image,
-          id_user:res.data.data.id_user
+          price: res.data.data.price,
+          company: res.data.data.company_profile,
+          detail: res.data.data.detail,
+          brandrs: res.data.data.id_brand,
+          categoryrs: res.data.data.id_category,
+          status: res.data.data.status,
+          sale: res.data.data.sale,
+          image: res.data.data.image,
+          id_user: res.data.data.id_user,
         });
       });
     axios
@@ -63,21 +65,17 @@ class editproduct extends Component {
           category: res.data.category,
         });
       });
- 
   }
 
   Handlechange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
   Handleoption = (e) => {
-    if(e.target.id==='status'&&e.target.value==='1')
-    {
-      this.setState({ [e.target.id]: e.target.value,showsale:'hidden'});
-    }
-    else if(e.target.id==='status'&&e.target.value==='0'){
-      this.setState({ [e.target.id]: e.target.value ,showsale:'number'});
-    }
-    else{
+    if (e.target.id === "status" && e.target.value === "1") {
+      this.setState({ [e.target.id]: e.target.value, showsale: "hidden" });
+    } else if (e.target.id === "status" && e.target.value === "0") {
+      this.setState({ [e.target.id]: e.target.value, showsale: "number" });
+    } else {
       this.setState({ [e.target.id]: e.target.value });
     }
   };
@@ -85,7 +83,7 @@ class editproduct extends Component {
     if (datasort === "brand") {
       let brand = this.state.brand;
       if (brand) {
-        return brand.map((value, index) => {
+        return brand.map((value) => {
           return (
             <option id={value["id"]} value={value["id"]}>
               {value["brand"]}
@@ -109,107 +107,135 @@ class editproduct extends Component {
   };
   Submitdata(e) {
     e.preventDefault();
-    let{name,price,brandrs,categoryrs,status,sale,company,file,detail}=this.state
-    let check=true
-    let geterror={}
-    geterror= this.state.error;
-    
-    if(file){
-      geterror["file"] = "";
-    }else{
-      check=false
+    let {
+      name,
+      price,
+      brandrs,
+      categoryrs,
+      status,
+      sale,
+      company,
+      file,
+      detail
+    } = this.state;
+    let check = 0;
+    let geterror = {};
+    this.setState({
+      error: {},
+    });
+    if (!file) {
+      check = 1;
       geterror["file"] = "Vui long chon anh";
     }
-    if(name){
-      geterror["ten"] = "";
-    }else{
-      check=false
+    if (!name) {
+      check = 1;
       geterror["ten"] = "Vui long nhap ten";
     }
-    if(price){
-      geterror["price"] = "";
-    }else{
-      check=false
+    if (!price) {
+      check = 1;
       geterror["price"] = "Vui long nhap gia tien";
     }
-    if(brandrs){
-      geterror["brand"] = "";
-    }else{
-      check=false
+    if (!brandrs) {
+      check = 1;
       geterror["brand"] = "Vui long chon thuong hieu";
     }
-    if(categoryrs){
-      geterror["category"] = "";
-    }else{
-      check=false
+    if (!categoryrs) {
+      check = 1;
       geterror["category"] = "Vui long nhap loai hang";
     }
-    if(company){
-      geterror["company"] = "";
-    }else{
-      check=false
+    if (!company) {
+      check = 1;
       geterror["company"] = "Vui long nhap cong ty";
     }
-    if(detail){
-      geterror["detail"] = "";
-    }else{
-      check=false
+    if (!detail) {
+      check = 1;
       geterror["detail"] = "Vui long nhap phan mo ta";
     }
-    if(status){
+    if (status) {
       geterror["status"] = "";
-      if(status==='0'){
-        if(sale){
-          geterror["sale"] = "";
-        }else{
-          check=false
+      if (status === "0") {
+        if (!sale) {
+          check = 1;
           geterror["sale"] = "Vui long nhap gia sale";
         }
       }
-      else{
-        geterror["sale"] = "";
-      }
-    }else{
-      check=false
-      geterror["status"] = "Vui long nhap hinh thuc ban";
+    } else {
+      check = 1;
+      geterror["file"] = "Vui long nhap hinh thuc ban";
     }
-    this.setState({
-      error:geterror
-    })
-  
-    if(check){
-      const formData = new FormData();
-      let token = localStorage.token;
-      console.log(token)
-      let config = {
-        headers: {
-          Authorization: "Bearer " + token, // CÓ dấu cách
-          "Content-Type": "application/x-www-form-urlencoded",
-          Accept: "application/json",
-        },
-      };       
-    formData.append("category", categoryrs);
-    formData.append("brand", brandrs);
-    formData.append("name", name);
-    formData.append("price", price);
-    formData.append("status", status);
-    formData.append("sale", sale);
-    formData.append("detail", detail);
-    formData.append("company", company);
-      file.map((value,index)=>{
-        formData.append('file[]',value)
-      })
-    axios
-      .post(
-        "http://localhost:8080/laravel/public/api/user/add-product",
-        formData,
-        config
-      )
-      .then((res) => {
-        console.log(res.data);
+
+    if (check === 0) {
+      let currentImg = this.state.image.length;
+      let newImg = file.length;
+      let remove = this.state.imageremove.length;
+      // console.log(currentImg-remove+newImg)
+      if (
+        currentImg - remove + newImg >= 0 &&
+        currentImg - remove + newImg <= 3
+      ) {
+        const formData = new FormData();
+        let token = localStorage.token;
+        let config = {
+          headers: {
+            "Authorization": "Bearer " + token, // CÓ dấu cách
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+          },
+        };
+        formData.append("category", categoryrs);
+        formData.append("brand", brandrs);
+        formData.append("name", name);
+        formData.append("price", price);
+        formData.append("status", status);
+        formData.append("detail", detail);
+        formData.append("company", company);
+   
+        file.map((value) => {
+          console.log(value)
+          formData.append("file[]", value);
+        });
+        this.state.imageremove.map((value) => {
+          console.log(value)
+          formData.append("avatarCheckBox[]", value);
+        });
+        axios
+          .post(
+          `http://localhost:8080/laravel/public/api/user/edit-product/${this.props.match.params.slug}`,
+            formData,
+            config
+          )
+          .then((res) => {
+            console.log(res.data.data);
+           
+        this.setState({
+          name: res.data.data.name,
+          price: res.data.data.price,
+          company: res.data.data.company_profile,
+          detail: res.data.data.detail,
+          brandrs: res.data.data.id_brand,
+          categoryrs: res.data.data.id_category,
+          status: res.data.data.status,
+          sale: res.data.data.sale,
+          image: JSON.parse(res.data.data.image),
+          id_user: res.data.data.id_user,
+        });
+
+          })
+          .catch((err)=>{
+            console.log(err.response)
+          })
+          
+      } else {
+        geterror["status"] = "Vuot qua 3 anh";
+        this.setState({
+          error: geterror,
+        });
+      }
+    } else {
+      this.setState({
+        error: geterror,
       });
     }
-   
   }
   HandleUserInputFile = (e) => {
     const typeimage = ["jpg", "PNG", "png", "jpeg", "JPG"];
@@ -219,13 +245,13 @@ class editproduct extends Component {
       if (file[0].size < 1024 * 1024) {
         const check1 = file[0].type.split("/");
         if (typeimage.includes(check1[1])) {
-          let getimage=[]
-          getimage.push(file[0])
+          let getimage = [];
+          getimage.push(file[0]);
           let reader = new FileReader();
           reader.onload = (e) => {
             this.setState({
               file: getimage,
-              error: {}
+              error: {},
             });
           };
           reader.readAsDataURL(file[0]);
@@ -302,48 +328,52 @@ class editproduct extends Component {
       }
     }
   };
-  checkvalue=(e)=>{
+  checkvalue = (e) => {
     // var all_users = [];
     // var value = this.checkbox.value;
     // all_users.push(value);
     // console.log(all_users);
-   
-    if(e.target.checked===true){
-      let {imageremove}=this.state
-      imageremove.push(e.target.value)
+
+    if (e.target.checked === true) {
+      let { imageremove } = this.state;
+      imageremove.push(e.target.value);
       this.setState({
-        imageremove:imageremove
-      })
-    }else{
-      let {imageremove}=this.state
-      imageremove.map((value,index)=>{
-        if(value===e.target.value)
-        imageremove.splice(index,1)
-      })
+        imageremove: imageremove,
+      });
+    } else {
+      let { imageremove } = this.state;
+      imageremove.map((value, index) => {
+        if (value === e.target.value) imageremove.splice(index, 1);
+      });
       // imageremove.push(e.target.value)
       this.setState({
-        imageremove:imageremove
-      })
-  
+        imageremove: imageremove,
+      });
     }
-}
-  renderimage=()=>{
-      if(this.state.image.length>0){
-          let Imagerender =this.state.image
-          return (
-              <div className="listimage-edit">
-              {Imagerender.map((index)=>{
-            return( 
-              <div style={{display:'inline-block'}}>
-            <img src={`http://localhost:8080/laravel/public/upload/user/product/${this.state.id_user}/${index}`}></img>
-            <input type='checkbox' value={index}  onChange={(e)=>this.checkvalue(e)}></input>
-            </div>
-            )
-        })}
+  };
+  renderimage = () => {
+    if (this.state.image.length > 0) {
+      let Imagerender = this.state.image;
+      return (
+        <div className="listimage-edit">
+          {Imagerender.map((index) => {
+            return (
+              <div style={{ display: "inline-block" }}>
+                <img
+                  src={`http://localhost:8080/laravel/public/upload/user/product/${this.state.id_user}/${index}`}
+                ></img>
+                <input
+                  type="checkbox"
+                  value={index}
+                  onChange={(e) => this.checkvalue(e)}
+                ></input>
+              </div>
+            );
+          })}
         </div>
-          )
+      );
     }
-  }
+  };
   renderError = () => {
     let Printerror = this.state.error;
     if (Object.keys(Printerror).length > 0) {
@@ -374,27 +404,39 @@ class editproduct extends Component {
               type="number"
               name="price"
               onChange={this.Handlechange}
-              value={this.state.email}
+              value={this.state.price}
               placeholder="Price"
             />
-            <select name="brand" id='brandrs' value={this.state.brandrs} onChange={this.Handleoption}>
+            <select
+              name="brand"
+              id="brandrs"
+              value={this.state.brandrs}
+              onChange={this.Handleoption}
+            >
               <option disabled selected value>
-                {" "}
-                -- select an option --{" "}
+                -- select an option --
               </option>
               {this.SelectOption("brand")}
             </select>
-            <select name='category' id='categoryrs' value={this.state.categoryrs} onChange={this.Handleoption}>
+            <select
+              name="category"
+              id="categoryrs"
+              value={this.state.categoryrs}
+              onChange={this.Handleoption}
+            >
               <option disabled selected value>
-                {" "}
-                -- select an option --{" "}
+                -- select an option --
               </option>
               {this.SelectOption("category")}
             </select>
-            <select name='status' id='status' value={this.state.status} onChange={this.Handleoption}>
+            <select
+              name="status"
+              id="status"
+              value={this.state.status}
+              onChange={this.Handleoption}
+            >
               <option disabled selected value>
-                {" "}
-                -- select an option --{" "}
+                -- select an option --
               </option>
               <option value="1">New</option>
               <option value="0">Sale</option>
@@ -415,7 +457,7 @@ class editproduct extends Component {
               placeholder="Company Profile"
               value={this.state.company}
             />
-             <input
+            <input
               type="file"
               name="image"
               onChange={this.HandleUserInputFile}
