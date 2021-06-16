@@ -12,7 +12,7 @@ class App extends Component {
   }
  
   render() {
-    const path=['Account','Product','profile','member']
+    const path=['Account','Product','profile','member','cart']
     const pathurl=this.props.location.pathname.split('/')
     return (
       <>

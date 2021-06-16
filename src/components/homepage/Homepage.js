@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 class Homepage extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +18,11 @@ class Homepage extends Component {
         });
       });
   }
+
+  productdetail = (e, data) => {
+    console.log(data);
+  };
+
   renderProduct = () => {
     if (this.state.data.length > 0) {
       return this.state.data.map((value) => {
@@ -25,21 +31,13 @@ class Homepage extends Component {
           <>
             <div key={value} className="col-sm-4">
               <div className="product-image-wrapper">
-                <div className="single-products">
-                  <div className="productinfo text-center">
-                    <img
-                      src={`http://localhost:8080/laravel/public/upload/user/product/${value["id_user"]}/${image[0]}`}
-                    />
-                    {/* <img src="images/shop/product7.jpg" /> */}
-                    <h2>${value["price"]}</h2>
-                    <p>{value["name"]}</p>
-                    <a href="#" className="btn btn-default add-to-cart">
-                      <i className="fa fa-shopping-cart" />
-                      Add to cart
-                    </a>
-                  </div>
-                  <div className="product-overlay">
-                    <div className="overlay-content">
+                <Link to={`/detail/${value["id"]}`}>
+                  <div className="single-products">
+                    <div className="productinfo text-center">
+                      <img
+                        src={`http://localhost:8080/laravel/public/upload/user/product/${value["id_user"]}/${image[0]}`}
+                      />
+                      {/* <img src="images/shop/product7.jpg" /> */}
                       <h2>${value["price"]}</h2>
                       <p>{value["name"]}</p>
                       <a href="#" className="btn btn-default add-to-cart">
@@ -47,8 +45,18 @@ class Homepage extends Component {
                         Add to cart
                       </a>
                     </div>
+                    <div className="product-overlay">
+                      <div className="overlay-content">
+                        <h2>${value["price"]}</h2>
+                        <p>{value["name"]}</p>
+                        <a href="#" className="btn btn-default add-to-cart">
+                          <i className="fa fa-shopping-cart" />
+                          Add to cart
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </Link>
                 <div className="choose">
                   <ul className="nav nav-pills nav-justified">
                     <li>

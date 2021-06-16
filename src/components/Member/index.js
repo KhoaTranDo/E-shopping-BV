@@ -9,7 +9,6 @@ import Editproduct from "./Product/editproduct"
 import Updateaccount from "./Account/updateaccount"
 import Myaccount from "./Account/profile"
 import Member from "./member"
-
 class index extends Component {
   render() {
     return (
