@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import NumberFormat from 'react-number-format';
 class Homepage extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +39,7 @@ class Homepage extends Component {
                         src={`http://localhost:8080/laravel/public/upload/user/product/${value["id_user"]}/${image[0]}`}
                       />
                       {/* <img src="images/shop/product7.jpg" /> */}
-                      <h2>${value["price"]}</h2>
+                      <h2> <NumberFormat value={value["price"]} displayType={'text'} thousandSeparator={true} prefix={'$'} /></h2>
                       <p>{value["name"]}</p>
                       <a href="#" className="btn btn-default add-to-cart">
                         <i className="fa fa-shopping-cart" />
@@ -47,7 +48,8 @@ class Homepage extends Component {
                     </div>
                     <div className="product-overlay">
                       <div className="overlay-content">
-                        <h2>${value["price"]}</h2>
+                        <h2> <NumberFormat value={value["price"]} displayType={'text'} thousandSeparator={true} prefix={'$'} /></h2>
+                       
                         <p>{value["name"]}</p>
                         <a href="#" className="btn btn-default add-to-cart">
                           <i className="fa fa-shopping-cart" />

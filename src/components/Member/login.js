@@ -19,7 +19,7 @@ class Login extends Component {
   }
   SubmitData(e) {
     e.preventDefault();
-    const { email, password, errors, level } = this.state;
+    const { email, password, level } = this.state;
     let validate = 0;
     const errorms = {};
     errorms["password"] = errorms["email"] = "";

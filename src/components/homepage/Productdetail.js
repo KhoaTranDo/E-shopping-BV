@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
 import "react-popupbox/dist/react-popupbox.css"
-
+import NumberFormat from 'react-number-format';
 class Productdetail extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +34,7 @@ class Productdetail extends Component {
       if(image.length>0 &&data["id_user"]){
           return image.map((value,index)=>{
               return( <a href>
-                <img src={`http://localhost:8080/laravel/public/upload/user/product/${data["id_user"]}/small_${image[index]}`} onClick={()=>this.changeImage(index)}/>
+                <img src={`http://localhost:8080/laravel/public/upload/user/product/${data["id_user"]}/small_${image[index]}`} onClick={()=>this.changeImage(index)} alt='product'/>
               </a>)
           })
       }
@@ -46,7 +46,7 @@ class Productdetail extends Component {
   }
   openPopupbox(e,data,image) {
       e.preventDefault()
-    const content = <img src={`http://localhost:8080/laravel/public/upload/user/product/${data}/larger_${image}`} />
+    const content = <img src={`http://localhost:8080/laravel/public/upload/user/product/${data}/larger_${image}`} alt='product' />
     PopupboxManager.open({
       content,
       config: {
@@ -60,8 +60,14 @@ class Productdetail extends Component {
       let productod={}
     if(localStorage.cart){
       let productod=JSON.parse(localStorage.cart)
-      productod[id]= productod[id]+qty
-      localStorage.cart=JSON.stringify(productod)
+      if(productod[id]){
+        productod[id]= productod[id]+qty
+        localStorage.cart=JSON.stringify(productod)
+      }
+      else{
+        productod[id]= qty
+        localStorage.cart=JSON.stringify(productod)
+      }
     }
     else{
       productod[id]=qty
@@ -94,7 +100,7 @@ class Productdetail extends Component {
             {/*product-details*/}
             <div className="col-sm-5">
               <div className="view-product">
-                <img src={`http://localhost:8080/laravel/public/upload/user/product/${data["id_user"]}/larger_${image[this.state.imageindex]}`} />
+                <img src={`http://localhost:8080/laravel/public/upload/user/product/${data["id_user"]}/larger_${image[this.state.imageindex]}`} alt='product'/>
                 <a href="/images/product-details/1.jpg" rel="prettyPhoto" onClick={(e)=>this.openPopupbox(e,data["id_user"],image[this.state.imageindex])}>
                   <h3>ZOOM</h3>
                 </a>
@@ -139,14 +145,15 @@ class Productdetail extends Component {
                 <img
                   src="/images/product-details/new.jpg"
                   className="newarrival"
+                  alt='product'
                 />
                 <h2>{data.name}</h2>
                 <p>Web ID: {data.id}</p>
-                <img src="/images/product-details/rating.png" alt />
+                <img src="/images/product-details/rating.png" alt="#" />
                 <span>
-                  <span>US ${data.price}</span>
+                  <span>US<NumberFormat value={data.price} displayType={'text'} thousandSeparator={true} prefix={'$'} /></span>
                   <label>Quantity:</label>
-                  <input type="number" min='0' defaultValue={this.state.quanlity} onChange={(e)=>this.Handchange(e)} />
+                  <input type="number" min='0' defaultValue={this.state.quanlity} value={this.state.quanlity} onChange={(e)=>this.Handchange(e)} />
                   <button type="button" className="btn btn-fefault cart" onClick={()=>this.Addtocart(data.id,this.state.quanlity)}>
                     <i className="fa fa-shopping-cart" />
                     Add to cart
@@ -165,7 +172,7 @@ class Productdetail extends Component {
                   <img
                     src="/images/product-details/share.png"
                     className="share img-responsive"
-                    alt
+                    alt="#"
                   />
                 </a>
               </div>
@@ -205,7 +212,7 @@ class Productdetail extends Component {
                   <div className="product-image-wrapper">
                     <div className="single-products">
                       <div className="productinfo text-center">
-                        <img src="/images/home/gallery1.jpg" alt />
+                        <img src="/images/home/gallery1.jpg" alt="#" />
                         <h2>$56</h2>
                         <p>Easy Polo Black Edition</p>
                         <button
@@ -223,7 +230,7 @@ class Productdetail extends Component {
                   <div className="product-image-wrapper">
                     <div className="single-products">
                       <div className="productinfo text-center">
-                        <img src="/images/home/gallery2.jpg" alt />
+                        <img src="/images/home/gallery2.jpg" alt="#" />
                         <h2>$56</h2>
                         <p>Easy Polo Black Edition</p>
                         <button
@@ -241,7 +248,7 @@ class Productdetail extends Component {
                   <div className="product-image-wrapper">
                     <div className="single-products">
                       <div className="productinfo text-center">
-                        <img src="/images/home/gallery3.jpg" alt />
+                        <img src="/images/home/gallery3.jpg" alt="#" />
                         <h2>$56</h2>
                         <p>Easy Polo Black Edition</p>
                         <button
@@ -259,7 +266,7 @@ class Productdetail extends Component {
                   <div className="product-image-wrapper">
                     <div className="single-products">
                       <div className="productinfo text-center">
-                        <img src="/images/home/gallery4.jpg" alt />
+                        <img src="/images/home/gallery4.jpg" alt="#" />
                         <h2>$56</h2>
                         <p>Easy Polo Black Edition</p>
                         <button
@@ -279,7 +286,7 @@ class Productdetail extends Component {
                   <div className="product-image-wrapper">
                     <div className="single-products">
                       <div className="productinfo text-center">
-                        <img src="/images/home/gallery1.jpg" alt />
+                        <img src="/images/home/gallery1.jpg" alt="#" />
                         <h2>$56</h2>
                         <p>Easy Polo Black Edition</p>
                         <button
@@ -297,7 +304,7 @@ class Productdetail extends Component {
                   <div className="product-image-wrapper">
                     <div className="single-products">
                       <div className="productinfo text-center">
-                        <img src="/images/home/gallery3.jpg" alt />
+                        <img src="/images/home/gallery3.jpg" alt="#" />
                         <h2>$56</h2>
                         <p>Easy Polo Black Edition</p>
                         <button
@@ -315,7 +322,7 @@ class Productdetail extends Component {
                   <div className="product-image-wrapper">
                     <div className="single-products">
                       <div className="productinfo text-center">
-                        <img src="/images/home/gallery2.jpg" alt />
+                        <img src="/images/home/gallery2.jpg" alt="#" />
                         <h2>$56</h2>
                         <p>Easy Polo Black Edition</p>
                         <button
@@ -333,7 +340,7 @@ class Productdetail extends Component {
                   <div className="product-image-wrapper">
                     <div className="single-products">
                       <div className="productinfo text-center">
-                        <img src="/images/home/gallery4.jpg" alt />
+                        <img src="/images/home/gallery4.jpg" alt="#" />
                         <h2>$56</h2>
                         <p>Easy Polo Black Edition</p>
                         <button
@@ -353,7 +360,7 @@ class Productdetail extends Component {
                   <div className="product-image-wrapper">
                     <div className="single-products">
                       <div className="productinfo text-center">
-                        <img src="/images/home/gallery1.jpg" alt />
+                        <img src="/images/home/gallery1.jpg" alt="#" />
                         <h2>$56</h2>
                         <p>Easy Polo Black Edition</p>
                         <button
@@ -371,7 +378,7 @@ class Productdetail extends Component {
                   <div className="product-image-wrapper">
                     <div className="single-products">
                       <div className="productinfo text-center">
-                        <img src="/images/home/gallery2.jpg" alt />
+                        <img src="/images/home/gallery2.jpg" alt="#" />
                         <h2>$56</h2>
                         <p>Easy Polo Black Edition</p>
                         <button
@@ -389,7 +396,7 @@ class Productdetail extends Component {
                   <div className="product-image-wrapper">
                     <div className="single-products">
                       <div className="productinfo text-center">
-                        <img src="/images/home/gallery3.jpg" alt />
+                        <img src="/images/home/gallery3.jpg" alt="#" />
                         <h2>$56</h2>
                         <p>Easy Polo Black Edition</p>
                         <button
@@ -407,7 +414,7 @@ class Productdetail extends Component {
                   <div className="product-image-wrapper">
                     <div className="single-products">
                       <div className="productinfo text-center">
-                        <img src="/images/home/gallery4.jpg" alt />
+                        <img src="/images/home/gallery4.jpg" alt="#" />
                         <h2>$56</h2>
                         <p>Easy Polo Black Edition</p>
                         <button
@@ -462,7 +469,7 @@ class Productdetail extends Component {
                     </span>
                     <textarea name defaultValue={""} />
                     <b>Rating: </b>{" "}
-                    <img src="/images/product-details/rating.png" alt />
+                    <img src="/images/product-details/rating.png" alt="#" />
                     <button
                       type="button"
                       className="btn btn-default pull-right"
@@ -489,7 +496,7 @@ class Productdetail extends Component {
                     <div className="product-image-wrapper">
                       <div className="single-products">
                         <div className="productinfo text-center">
-                          <img src="/images/home/recommend1.jpg" alt />
+                          <img src="/images/home/recommend1.jpg" alt="#" />
                           <h2>$56</h2>
                           <p>Easy Polo Black Edition</p>
                           <button
@@ -507,7 +514,7 @@ class Productdetail extends Component {
                     <div className="product-image-wrapper">
                       <div className="single-products">
                         <div className="productinfo text-center">
-                          <img src="/images/home/recommend2.jpg" alt />
+                          <img src="/images/home/recommend2.jpg" alt="#" />
                           <h2>$56</h2>
                           <p>Easy Polo Black Edition</p>
                           <button
@@ -525,7 +532,7 @@ class Productdetail extends Component {
                     <div className="product-image-wrapper">
                       <div className="single-products">
                         <div className="productinfo text-center">
-                          <img src="/images/home/recommend3.jpg" alt />
+                          <img src="/images/home/recommend3.jpg" alt="#" />
                           <h2>$56</h2>
                           <p>Easy Polo Black Edition</p>
                           <button
@@ -545,7 +552,7 @@ class Productdetail extends Component {
                     <div className="product-image-wrapper">
                       <div className="single-products">
                         <div className="productinfo text-center">
-                          <img src="/images/home/recommend1.jpg" alt />
+                          <img src="/images/home/recommend1.jpg" alt="#" />
                           <h2>$56</h2>
                           <p>Easy Polo Black Edition</p>
                           <button
@@ -563,7 +570,7 @@ class Productdetail extends Component {
                     <div className="product-image-wrapper">
                       <div className="single-products">
                         <div className="productinfo text-center">
-                          <img src="/images/home/recommend2.jpg" alt />
+                          <img src="/images/home/recommend2.jpg" alt="#" />
                           <h2>$56</h2>
                           <p>Easy Polo Black Edition</p>
                           <button
@@ -581,7 +588,7 @@ class Productdetail extends Component {
                     <div className="product-image-wrapper">
                       <div className="single-products">
                         <div className="productinfo text-center">
-                          <img src="/images/home/recommend3.jpg" alt />
+                          <img src="/images/home/recommend3.jpg" alt="#" />
                           <h2>$56</h2>
                           <p>Easy Polo Black Edition</p>
                           <button

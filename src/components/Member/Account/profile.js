@@ -1,7 +1,6 @@
 import { Component } from "react";
 import Product from "../Product/myProduct";
 import Account from "./updateaccount";
-import Slide from "../slide";
 import { Redirect } from "react-router";
 class Profile extends Component {
   constructor(props) {

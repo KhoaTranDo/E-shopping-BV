@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
 import Blogcontent from "./newblog";
 
 class blog extends Component {

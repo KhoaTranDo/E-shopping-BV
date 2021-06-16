@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Sliderbar from "../layout/slide";
 import Rating from "./rating";
 import Listcomment from "./listcomment";
 // import Blogcontent from "./newblog";
