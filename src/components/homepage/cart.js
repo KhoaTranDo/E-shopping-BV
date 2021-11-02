@@ -1,7 +1,11 @@
 import axios from "axios";
 import React, { Component } from "react";
 import NumberFormat from "react-number-format";
+
+import { AppContext } from "./AppContext";
+
 class cart extends Component {
+  static contextType=AppContext
   constructor(props) {
     super(props);
     this.state = {
@@ -30,6 +34,7 @@ class cart extends Component {
     delete idProduct[id];
     console.log(idProduct);
     localStorage.cart = JSON.stringify(idProduct);
+    this.context.Updatecart(Object.keys(idProduct).length)
     this.renderData(idProduct);
   };
   qtyproduct = (e, id) => {
@@ -45,13 +50,13 @@ class cart extends Component {
       idProduct[id] = idProduct[id] + 1;
     }
     localStorage.cart = JSON.stringify(idProduct);
+    this.context.Updatecart(Object.keys(idProduct).length)
     this.renderData(idProduct);
   };
   renderProduct = () => {
-    let total = 0;
+    console.log(this.state.listproduct.length)
     if (this.state.listproduct.length > 0) {
       let data = this.state.listproduct.map((value, index) => {
-        total += parseInt(value["price"]) * value["qty"];
         let image = JSON.parse(value["image"]);
         return (
           <tr key={index}>

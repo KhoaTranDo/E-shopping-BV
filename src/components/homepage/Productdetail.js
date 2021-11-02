@@ -3,7 +3,9 @@ import React, { Component } from "react";
 import { PopupboxManager, PopupboxContainer } from 'react-popupbox';
 import "react-popupbox/dist/react-popupbox.css"
 import NumberFormat from 'react-number-format';
+import { AppContext } from "./AppContext";
 class Productdetail extends Component {
+  static contextType=AppContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -63,16 +65,19 @@ class Productdetail extends Component {
       if(productod[id]){
         productod[id]= productod[id]+qty
         localStorage.cart=JSON.stringify(productod)
+       this.context.Updatecart(Object.keys(productod).length)
       }
       else{
         productod[id]= qty
         localStorage.cart=JSON.stringify(productod)
+        this.context.Updatecart(Object.keys(productod).length)
       }
     }
     else{
       productod[id]=qty
       console.log(productod)
       localStorage.cart=JSON.stringify(productod)
+      this.context.Updatecart(Object.keys(productod).length)
     }
     }
   }
